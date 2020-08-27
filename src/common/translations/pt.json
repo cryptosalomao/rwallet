@@ -71,7 +71,9 @@
         "createWallet": "Criar carteira básica",
         "createWalletNote": "Recomendado para usuários iniciantes",
         "importWallet": "Importar carteira existente",
-        "importWalletNote": "Restaurar sua carteira usando a frase de recuperação"
+        "importWalletNote": "Restaurar sua carteira usando a frase de recuperação",
+        "connectLndHub": "Conectar serviço LNDhub",
+        "connectLndHubNote": "Utilize a Lightning Network através do serviço LNDhub"
       },
       "selectCurrency": {
         "title": "Selecionar moeda da carteira",

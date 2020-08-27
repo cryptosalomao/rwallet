@@ -31,6 +31,15 @@ class WalletAddIndex extends Component {
           this.createWalletFlow('WalletRecovery');
         },
       },
+      {
+        id: '3',
+        title: 'lightning.addWallet.connectLightning',
+        text: 'lightning.addWallet.connectLightningNote',
+        icon: (<AntDesign name="lightning-bolt" size={25} style={{ color: '#515151' }} />),
+        onPress: () => {
+          this.createWalletFlow('AddLightningCredentials');
+        },
+      },
     ];
 
     constructor(props) {

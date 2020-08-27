@@ -301,6 +301,17 @@
     "Russian": "Russo",
     "Korean": "Coreano"
   },
+  "lightning": {
+    "addWallet": {
+      "connectLightning": "Conectar carteira Lightning",
+      "connectLightningNote": "Use serviços de terceiros para acessar uma carteira Lightning"
+    },
+    "configureCredentials": {
+      "pageTitle": "Conectar carteira Lightning",
+      "pageDescription": "Insira as credenciais que dão acesso à carteira Lightning",
+      "connect": "Conectar"
+    }
+  },
   "button": {
     "save": "SALVAR",
     "NEXT": "PRÓXIMO",

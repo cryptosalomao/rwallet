@@ -71,7 +71,9 @@
         "createWallet": "Create Basic Wallet",
         "createWalletNote": "Recommended for first-time users",
         "importWallet": "Import Existing Wallet",
-        "importWalletNote": "Restore your wallet using the recovery phrase"
+        "importWalletNote": "Restore your wallet using the recovery phrase",
+        "connectLndHub": "Connect to LNDhub service",
+        "connectLndHubNote": "Use Lightning Network with LNDhub service"
       },
       "selectCurrency": {
         "title": "Select Wallet Currency",

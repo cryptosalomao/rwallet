@@ -45,6 +45,9 @@ import DAppBrowser from '../pages/dapp/browser';
 import RnsCreateName from '../pages/wallet/rns/create';
 import RnsStatus from '../pages/wallet/rns/status';
 
+// Lightning Pages
+import AddLightningCredentials from '../pages/lightning/add.credentials';
+
 const defaultNavigationOptions = () => ({ navigation }) => {
   common.currentNavigation = navigation;
   return {
@@ -223,6 +226,13 @@ const routeConfigMap = {
       path: 'AddCustomTokenConfirm',
       navigationOptions: () => ({
         headerTitle: 'AddCustomTokenConfirm',
+      }),
+    },
+    AddLightningCredentials: {
+      screen: AddLightningCredentials,
+      path: 'AddLightningCredentials',
+      navigationOptions: () => ({
+        headerTitle: 'AddLightningCredentials'
       }),
     },
   },
