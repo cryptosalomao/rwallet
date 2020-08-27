@@ -21,8 +21,10 @@ import WalletSelection from '../../components/common/modal/wallet.selection.moda
 import AdsCarousel from '../../components/common/carousel/ads.carousel';
 import { createDappWarningConfirmation } from '../../common/confirmation.controller';
 import storage from '../../common/storage';
-import color from '../../assets/styles/color.ts';
+import color from '../../assets/styles/color';
 import Image from '../../components/common/image/image';
+import config from '../../../config';
+import common from '../../common/common';
 
 const RECENT_DAPPS_NUMBER = 3; // show recent 3 dapps
 const DAPP_PER_COLUMN = 3; // One column has 3 dapps
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
-    color: '#028CFF',
+    color: color.vividBlue,
     fontWeight: 'bold',
     fontSize: 20,
     fontFamily: 'Avenir-Heavy',
@@ -76,17 +78,17 @@ const styles = StyleSheet.create({
     marginLeft: 18,
   },
   dappName: {
-    color: '#060606',
+    color: color.gray06,
     fontFamily: 'Avenir-Book',
     fontSize: 12,
   },
   dappDesc: {
-    color: '#535353',
+    color: color.gray53,
     fontSize: 11,
     fontFamily: 'Avenir-Book',
   },
   dappUrl: {
-    color: '#ABABAB',
+    color: color.grayAB,
     fontSize: 11,
     fontFamily: 'Avenir-Book',
   },
@@ -218,7 +220,7 @@ class DAppIndex extends Component {
           this.onDappPress(dapp);
         }}
       >
-        <Image style={[styles.adItemImage, type === PLACEHOLDER_TYPE ? { backgroundColor: color.concrete } : {}]} source={{ uri: item.imgUrl }} />
+        <Image style={[styles.adItemImage, type === PLACEHOLDER_TYPE ? { backgroundColor: color.grayF2 } : {}]} source={{ uri: item.imgUrl }} />
       </TouchableOpacity>
     );
   }
@@ -250,11 +252,11 @@ class DAppIndex extends Component {
         style={[styles.item, ...itemStyles]}
         onPress={() => this.onDappPress(item)}
       >
-        <Image style={styles.dappIcon} source={{ uri: item.iconUrl }} />
+        <Image style={styles.dappIcon} source={{ uri: (item.iconUrl || config.defaultDappIcon) }} />
         <View style={styles.dappInfo}>
           <Text numberOfLines={2} ellipsizeMode="tail" style={[styles.dappName, { fontSize: 18 }]}>{(item.name && (item.name[language] || item.name.en)) || item.name}</Text>
           <Text numberOfLines={2} ellipsizeMode="tail" style={[styles.dappDesc, { width: 100 }]}>{(item.description && (item.description[language] || item.description.en)) || item.description}</Text>
-          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.dappUrl}>{item.url}</Text>
+          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.dappUrl}>{common.completionUrl(item.url)}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -279,7 +281,7 @@ class DAppIndex extends Component {
           onWillFocus={() => {
             StatusBar.setBarStyle('dark-content');
             if (Platform.OS === 'android') {
-              StatusBar.setBackgroundColor('white');
+              StatusBar.setBackgroundColor(color.white);
             }
           }}
           onWillBlur={() => {
@@ -296,12 +298,14 @@ class DAppIndex extends Component {
           style={styles.searchInput}
           value={searchUrl}
           placeholder={strings('page.dapp.search')}
-          placeholderTextColor="#B5B5B5"
+          placeholderTextColor={color.grayB5}
           onChangeText={(url) => { this.setState({ searchUrl: url }); }}
           onSubmit={() => {
             if (searchUrl) {
+              const url = common.completionUrl(searchUrl);
+              const domain = common.getDomain(url);
               this.onDappPress({
-                url: searchUrl, name: searchUrl, description: '', networks: ['Mainnet', 'Testnet'], id: searchUrl,
+                url, name: domain, description: '', networks: ['Mainnet', 'Testnet'], id: url, iconUrl: config.defaultDappIcon,
               });
             }
           }}
@@ -325,7 +329,7 @@ class DAppIndex extends Component {
               style={[styles.item, { flex: 1, justifyContent: 'flex-start', marginRight: 15 }]}
               onPress={() => this.onDappPress(item)}
             >
-              <Image style={[styles.dappIcon, styles.recentDappSize]} source={{ uri: item.iconUrl }} />
+              <Image style={[styles.dappIcon, styles.recentDappSize]} source={{ uri: (item.iconUrl || config.defaultDappIcon) }} />
               <View style={[styles.dappInfo, { marginLeft: 6 }]}>
                 <Text numberOfLines={2} ellipsizeMode="tail" style={styles.dappName}>{(item.name && (item.name[language] || item.name.en)) || item.name}</Text>
               </View>

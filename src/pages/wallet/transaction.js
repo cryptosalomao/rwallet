@@ -14,7 +14,7 @@ import common from '../../common/common';
 import { strings } from '../../common/i18n';
 import ResponsiveText from '../../components/common/misc/responsive.text';
 import BasePageGereral from '../base/base.page.general';
-import color from '../../assets/styles/color.ts';
+import color from '../../assets/styles/color';
 import references from '../../assets/references';
 import appActions from '../../redux/app/actions';
 import { createInfoNotification } from '../../common/notification.controller';
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#000',
+    color: color.black,
     marginBottom: 10,
   },
   state: {
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
 });
 
 const stateIcons = {
-  Sent: <SimpleLineIcons name="arrow-up-circle" size={45} style={[{ color: '#6875B7' }]} />,
+  Sent: <SimpleLineIcons name="arrow-up-circle" size={45} style={[{ color: color.shipCove }]} />,
   Sending: <Image source={sending} style={{ width: 37, height: 37 }} />,
-  Received: <SimpleLineIcons name="arrow-down-circle" size={45} style={[{ color: '#6FC062' }]} />,
+  Received: <SimpleLineIcons name="arrow-down-circle" size={45} style={[{ color: color.mantis }]} />,
   Receiving: <Image source={sending} style={{ width: 37, height: 37 }} />,
-  Failed: <MaterialIcons name="error-outline" size={50} style={[{ color: '#E73934' }]} />,
+  Failed: <MaterialIcons name="error-outline" size={50} style={[{ color: color.cinnabar }]} />,
 };
 
 class Transaction extends Component {
@@ -110,7 +110,7 @@ class Transaction extends Component {
       const amount = common.convertUnitToCoinAmount(symbol, value);
       amountText = `${common.getBalanceString(amount, symbol)} ${common.getSymbolName(symbol, type)}`;
     }
-    const datetimeText = transation.datetime ? transation.datetime.format('MMM Do YYYY HH:mm:ss A ZZ') : '';
+    const datetimeText = transation.datetime ? transation.datetime.format('LLL') : '';
     let confirmations = strings('page.wallet.transaction.Unconfirmed');
     if (transation.state === 'Sent' || transation.state === 'Received') {
       let latestBlockHeight = common.getLatestBlockHeight(latestBlockHeights, chain, type);

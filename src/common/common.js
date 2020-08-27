@@ -385,11 +385,11 @@ const common = {
       newPrice.push(rifPrice);
     }
 
-    let rifproPrice = _.find(newPrice, { symbol: 'RIFPRO' });
-    if (_.isUndefined(rifproPrice)) {
-      rifproPrice = _.cloneDeep(rifPrice);
-      rifproPrice.symbol = 'RIFPRO';
-      newPrice.push(rifproPrice);
+    let rifpPrice = _.find(newPrice, { symbol: 'RIFP' });
+    if (_.isUndefined(rifpPrice)) {
+      rifpPrice = _.cloneDeep(rifPrice);
+      rifpPrice.symbol = 'RIFP';
+      newPrice.push(rifpPrice);
     }
     return newPrice;
   },
@@ -398,10 +398,27 @@ const common = {
     I18n.locale = language;
   },
 
+  normalizeLocale(key) {
+    return key ? key.toLowerCase().replace('_', '-') : key;
+  },
+
+  convertToMomentLocale(locale) {
+    let newLocale = this.normalizeLocale(locale);
+    // The locale code of Brazilian Portuguese is ptbr in Mi Note 9s and Mi Max.
+    // We need to convert it to 'pt-br'.
+    newLocale = newLocale === 'ptbr' ? 'pt-br' : newLocale;
+    newLocale = newLocale === 'zh' ? 'zh-cn' : newLocale;
+    return newLocale;
+  },
+
   setMomentLocale(locale) {
-    const newLocale = locale === 'zh' ? 'zh-cn' : locale;
-    // pt-BR will be normalize to pt-br
-    moment.locale(newLocale);
+    try {
+      // pt-BR will be normalize to pt-br
+      const newLocale = this.convertToMomentLocale(locale);
+      moment.locale(newLocale);
+    } catch (error) {
+      console.warn('Failed to set moment locale, locale: ', locale);
+    }
   },
 
   estimateBtcSize({
@@ -531,6 +548,43 @@ const common = {
   // get redux store
   getStore() {
     return this.store;
+  },
+
+  // get domain from url
+  getDomain(url) {
+    try {
+      let domain = url.toLowerCase();
+      if (domain.startsWith('http://')) {
+        domain = domain.substring(7, domain.length);
+      }
+      if (domain.startsWith('https://')) {
+        domain = domain.substring(8, domain.length);
+      }
+      if (domain.startsWith('www.')) {
+        domain = domain.substring(4, domain.length);
+      }
+
+      // delete sub route
+      [domain] = _.split(domain, '/');
+
+      // delete params
+      [domain] = _.split(domain, '?');
+
+      return domain;
+    } catch (error) {
+      return url;
+    }
+  },
+
+  // completion dapp url with 'http'
+  completionUrl(url) {
+    try {
+      let newUrl = url.toLowerCase();
+      newUrl = (newUrl.startsWith('http://') || newUrl.startsWith('https://')) ? newUrl : `http://${newUrl}`;
+      return newUrl;
+    } catch (error) {
+      return url;
+    }
   },
 };
 

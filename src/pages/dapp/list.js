@@ -13,6 +13,9 @@ import WalletSelection from '../../components/common/modal/wallet.selection.moda
 import { strings } from '../../common/i18n';
 import { createDappWarningConfirmation } from '../../common/confirmation.controller';
 import storage from '../../common/storage';
+import color from '../../assets/styles/color';
+import config from '../../../config';
+import common from '../../common/common';
 
 const styles = StyleSheet.create({
   item: {
@@ -34,17 +37,17 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   dappName: {
-    color: '#060606',
+    color: color.gray06,
     fontFamily: 'Avenir-Book',
     fontSize: 18,
   },
   dappDesc: {
-    color: '#535353',
+    color: color.gray53,
     fontSize: 11,
     fontFamily: 'Avenir-Book',
   },
   dappUrl: {
-    color: '#ABABAB',
+    color: color.grayAB,
     fontSize: 12,
     fontFamily: 'Avenir-Book',
   },
@@ -121,11 +124,11 @@ class DAppList extends Component {
               style={[styles.item, { marginRight: 15 }]}
               onPress={() => this.onDappPress(item)}
             >
-              <Image style={styles.dappIcon} source={{ uri: item.iconUrl }} />
+              <Image style={styles.dappIcon} source={{ uri: (item.iconUrl || config.defaultDappIcon) }} />
               <View style={styles.dappInfo}>
-                { item.name ? <Text numberOfLines={2} ellipsizeMode="tail" style={styles.dappName}>{item.name[language] || item.name.en}</Text> : null }
+                { item.name ? <Text numberOfLines={2} ellipsizeMode="tail" style={styles.dappName}>{item.name[language] || item.name.en || item.name}</Text> : null }
                 { item.description ? <Text numberOfLines={2} ellipsizeMode="tail" style={[styles.dappDesc]}>{item.description[language] || item.description.en}</Text> : null }
-                <Text style={styles.dappUrl}>{item.url}</Text>
+                <Text numberOfLines={2} style={styles.dappUrl}>{common.completionUrl(item.url)}</Text>
               </View>
             </TouchableOpacity>
           )}

@@ -13,7 +13,7 @@ import Header from '../../../components/headers/header';
 import BasePageGereral from '../../base/base.page.general';
 import Loc from '../../../components/common/misc/loc';
 import presetStyle from '../../../assets/styles/style';
-import color from '../../../assets/styles/color.ts';
+import color from '../../../assets/styles/color';
 import space from '../../../assets/styles/space';
 import Button from '../../../components/common/button/button';
 import AddressSelectionModal from '../../../components/common/modal/address.selection.modal';
@@ -22,11 +22,12 @@ import parse from '../../../common/parse';
 import config from '../../../../config';
 import ERROR_CODE from '../../../common/errors';
 import {
-  createErrorNotification, getErrorNotification, getDefaultErrorNotification,
+  getErrorNotification, getDefaultErrorNotification,
 } from '../../../common/notification.controller';
 import appActions from '../../../redux/app/actions';
 import storage from '../../../common/storage';
 import CreateRnsConfirmation from '../../../components/rns/create.rns.confirmation';
+import SubdomainUnavailableNotification from '../../../components/rns/subdomain.unavailable.notification';
 import common from '../../../common/common';
 import TypeTag from '../../../components/common/misc/type.tag';
 
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     borderWidth: 1,
-    borderColor: '#F2F2F2',
+    borderColor: color.grayF2,
     height: 38,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     fontSize: 14,
-    color: '#919191',
+    color: color.gray91,
   },
   addButtonPlus: {
     fontSize: 17,
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   },
   rnsRow: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: '#D8D8D8',
+    borderColor: color.grayD8,
     marginBottom: 20,
   },
   rnsTokenInput: {
@@ -121,12 +122,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Avenir-Book',
     marginRight: 7,
-    color: '#979797',
+    color: color.gray97,
     flex: 1,
   },
   rnsRowChevron: {
     fontSize: 30,
-    color: '#CBC6C6',
+    color: color.lightGray,
     right: 5,
   },
   notice: {
@@ -134,8 +135,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   successNotice: {
-    color: '#00B520',
+    color: color.malachite,
     marginTop: 10,
+  },
+  trashButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    width: 40,
+    height: 40,
   },
 });
 
@@ -239,25 +246,23 @@ class RnsAddress extends Component {
     // Else, notify user to check names.
     console.log('parse.isSubdomainAvailable, result: ', result);
     let isAllDomainValid = true;
+    const unavailableSubdomains = [];
     _.each(result, (item, index) => {
       if (!item) {
         newRnsRows[index].rnsNameState = RnsNameState.UNAVAILABLE;
         isAllDomainValid = false;
+        unavailableSubdomains.push(newRnsRows[index].subdomain);
       } else {
         newRnsRows[index].rnsNameState = RnsNameState.AVAILABLE;
       }
     });
-    if (isAllDomainValid) {
-      this.rnsConfirmation.show();
-    } else {
-      const notification = createErrorNotification(
-        'modal.rnsNameUnavailable.title',
-        'modal.rnsNameUnavailable.body',
-        'button.gotIt',
-      );
-      addNotification(notification);
-      this.setState({ rnsRows: newRnsRows });
-    }
+    this.setState({ rnsRows: newRnsRows }, () => {
+      if (isAllDomainValid) {
+        this.rnsConfirmation.show();
+      } else {
+        this.subdomainUnavailableNotification.show();
+      }
+    });
   }
 
   createSubdomain = async () => {
@@ -394,9 +399,11 @@ class RnsAddress extends Component {
         <View style={styles.sectionContainer}>
           <View style={styles.titleRow}>
             <Text style={styles.title}>{strings('page.wallet.rnsCreateName.address')}</Text>
-            <TouchableOpacity onPress={() => { this.onDeleteButtonPressed(index); }}>
-              { index !== 0 && <FontAwesome style={styles.trash} name="trash-o" /> }
+            { index !== 0 && (
+            <TouchableOpacity style={styles.trashButton} onPress={() => { this.onDeleteButtonPressed(index); }}>
+              <FontAwesome style={styles.trash} name="trash-o" />
             </TouchableOpacity>
+            )}
           </View>
           <View style={styles.rnsTokenInput}>
             <TouchableOpacity
@@ -436,6 +443,13 @@ class RnsAddress extends Component {
     const rnsRow = _.find(rnsRows, (row) => !row.subdomain && row.errorMessage);
     const bottomButton = (<Button text="button.create" onPress={this.onCreatePressed} disabled={!!rnsRow} />);
 
+    const unavailableSubdomains = [];
+    _.each(rnsRows, (item) => {
+      if (item.rnsNameState === RnsNameState.UNAVAILABLE) {
+        unavailableSubdomains.push(item.subdomain);
+      }
+    });
+
     return (
       <BasePageGereral
         isSafeView={false}
@@ -469,6 +483,10 @@ class RnsAddress extends Component {
           ref={(ref) => { this.rnsConfirmation = ref; }}
           data={rnsRows}
           onConfirm={this.createSubdomain}
+        />
+        <SubdomainUnavailableNotification
+          ref={(ref) => { this.subdomainUnavailableNotification = ref; }}
+          data={unavailableSubdomains}
         />
       </BasePageGereral>
     );

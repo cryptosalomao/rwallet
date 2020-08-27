@@ -76,7 +76,7 @@
         "connectLndHubNote": "Use Lightning Network with LNDhub service"
       },
       "selectCurrency": {
-        "title": "Select Wallet Currency",
+        "title": "Select Wallet Assets",
         "mainnet": "Mainnet",
         "testnet": "Testnet"
       },
@@ -135,7 +135,9 @@
         "have": "I have %{balance} in %{wallet}",
         "min": "MIN",
         "half": "HALF",
-        "all": "ALL"
+        "all": "ALL",
+        "exchanging": "Exchanging",
+        "receiving": "Receiving"
       },
       "swapSelection": {
         "title": "Select Asset",
@@ -179,8 +181,8 @@
         "rnsName": "RNS Nickname",
         "anotherAddress": "Another address",
         "nameTooShort": "Nickname contains at least {{count}} characters",                                               
-        "nameUnavailable": "Sorry, The name entered is not available",
-        "nameAvailable": "The name entered is available",
+        "nameUnavailable": "Sorry, The nickname entered is not available",
+        "nameAvailable": "The nickname entered is available",
         "selectAddress": "Select a Address",
         "confirmNotice": {
           "one": "Please confirm that you would like to create nicknames for below 1 wallet.",
@@ -238,7 +240,8 @@
         "setPasscode": "Set Passcode",
         "resetPasscode": "Reset Passcode",
         "useFingerprint": "Use Fingerprint",
-        "useFaceID": "Use Face ID"
+        "useFaceID": "Use Face ID",
+        "useBiometrics": "Use Biometrics"
       },
       "resetPasscodeSuccess" :{
         "title": {
@@ -314,10 +317,11 @@
     "Exchange": "Exchange",
     "addAsset": "Add Asset",
     "ok": "Ok",
-    "name": "Name",
+    "nickname": "Nickname",
     "pending": "Pending",
     "done": "Done",
-    "share": "SHARE"
+    "share": "SHARE",
+    "update": "Update"
   },
   "txState": {
     "Sent": "Sent",
@@ -394,7 +398,7 @@
     },
     "subdomainCopied": {
       "title": "Copied",
-      "body": "The subdomain has been copied to the clipboard."
+      "body": "The nickname has been copied to the clipboard."
     },
     "txIdCopied": {
       "title": "Copied",
@@ -423,7 +427,13 @@
         "title": "Face ID",
         "touchToVerify": "Touch to verify face ID",
         "nativeNote": "Please aim at the camera for face recognition",
-        "notMatch": "FaceID does not march. Please try again."
+        "notMatch": "FaceID does not match. Please try again."
+      },
+      "biometrics": {
+        "title": "Biometrics",
+        "touchToVerify": "Touch to verify biometrics",
+        "nativeNote": "Please verify your biometrics",
+        "notMatch": "Biometrics does not match. Please try again."
       },
       "failedAndTryPasscode": "Authentication failed. Please try Passcode.",
       "failedAndTryAgain": "Authentication failed. Please try again."
@@ -465,11 +475,11 @@
     },
     "rnsNameUnavailable": {
       "title": "RNS nickname unavailable",
-      "body": "Some nicknames is unavailable. Please check the list and retry anther nickname."
+      "body": "Below entered nicknames are unavailable. Please try again with different nicknames."
     },
     "rnsSubdomainNotFound": {
-      "title": "RNS Subdomain Not Found",
-      "body": "RNS subdomain is not found in server."
+      "title": "RNS Nickname Not Found",
+      "body": "RNS nickname is not found in server."
     },
     "rnsNewFeature": {
       "title": "Send & Receive got easier",

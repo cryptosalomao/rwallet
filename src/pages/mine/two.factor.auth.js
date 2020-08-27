@@ -12,6 +12,7 @@ import appActions from '../../redux/app/actions';
 import BasePageGereral from '../base/base.page.general';
 import common from '../../common/common';
 import CONSTANS from '../../common/constants.json';
+import color from '../../assets/styles/color';
 
 const { BIOMETRY_TYPES } = CONSTANS;
 
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   title: {
-    color: '#2D2D2D',
+    color: color.mineShaft,
     fontSize: 16,
     fontWeight: '300',
     lineHeight: 22,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 80,
     borderBottomWidth: 1,
-    borderBottomColor: '#EDEDED',
+    borderBottomColor: color.grayED,
   },
 });
 
@@ -87,6 +88,16 @@ class TwoFactorAuth extends Component {
       }
     }
 
+    getBiometryText = (biometryType) => {
+      const prefix = 'page.mine.2fa';
+      const suffix = {
+        [BIOMETRY_TYPES.FACE_ID]: 'useFaceID',
+        [BIOMETRY_TYPES.TOUCH_ID]: 'useFingerprint',
+        [BIOMETRY_TYPES.Biometrics]: 'useBiometrics',
+      };
+      return `${prefix}.${suffix[biometryType]}`;
+    }
+
     render() {
       const { isOpen } = this.state;
       const { navigation, passcode } = this.props;
@@ -97,7 +108,7 @@ class TwoFactorAuth extends Component {
       // Show use fingerprint switch row if fingerprint is available.
 
       if (biometryType) {
-        const text = biometryType === BIOMETRY_TYPES.FACE_ID ? 'page.mine.2fa.useFaceID' : 'page.mine.2fa.useFingerprint';
+        const text = this.getBiometryText(biometryType);
         useFingerSwitchRow = (
           <View style={styles.row}>
             <Loc style={[styles.title]} text={text} />

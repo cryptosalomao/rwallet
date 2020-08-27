@@ -4,7 +4,7 @@
     "Spend": "Gastar",
     "Earn": "Ganhar",
     "Me": "Eu",
-    "Exchange": "Troca"
+    "Exchange": "Trocar"
   },
   "page": {
     "start": {
@@ -12,7 +12,7 @@
         "button": "Iniciar"
       },
       "terms": {
-        "term1": "Entendo que meus fundos estão mantidos com segurança neste dispositivo, não por uma empresa.",
+        "term1": "Entendo que meus fundos estão mantidos com segurança neste dispositivo e não por uma empresa.",
         "term2": "Entendo que, se este aplicativo for movido para outro dispositivo ou excluído, meus fundos só poderão ser recuperados com a frase de recuperação.",
         "term3": "Eu li, compreendi e concordo com os Termos de Uso.",
         "viewTerms": "Ver Termos de Uso",
@@ -75,9 +75,9 @@
         "importWalletNote": "Restaure sua carteira usando a frase de recuperação"
       },
       "selectCurrency": {
-        "title": "Selecionar moeda da carteira",
-        "mainnet": "Mainnet",
-        "testnet": "Testnet"
+        "title": "Selecionar ativos da carteira",
+        "mainnet": "Rede principal",
+        "testnet": "Rede teste"
       },
       "selectWallet": {
         "title": "Selecionar ativo"
@@ -93,7 +93,7 @@
       "recoveryPhrase": {
         "title": "Frase de recuperação",
         "note1": "Anote ou copie estas palavras",
-        "note2": "nesta ordem e salve-as",
+        "note2": "nesta ordem e guarde-as",
         "note3": "em algum lugar seguro"
       },
       "verifyPhrase": {
@@ -136,7 +136,9 @@
         "have": "Eu tenho %{balance} na carteira %{wallet}",
         "min": "MIN",
         "half": "METADE",
-        "all": "TUDO"
+        "all": "TUDO",
+        "exchanging": "Enviando",
+        "receiving": "Recebendo"
       },
       "swapSelection": {
         "title": "Selecionar ativo",
@@ -156,22 +158,22 @@
       },
       "addCustomToken": {
         "title": "Adicionar ativos personalizados",
-        "address": "Endereço do Contrato do Ativo",
-        "mainnet": "Mainnet"
+        "address": "Endereço do contrato do ativo",
+        "mainnet": "Rede principal"
       },
       "addCustomTokenConfirm": {
         "title": "Adicionar ativos personalizados",
         "question": "Você deseja adicionar este ativo?",
         "token": "Ativo",
-        "symbol": "Símbolo do Ativo",
+        "symbol": "Símbolo do ativo",
         "decimals": "Decimais de precisão",
         "balance": "Saldo"
       },
       "addToken": {
         "title": "Adicionar Ativo",
-        "enabledAssets": "Ativos Habilitados",
+        "enabledAssets": "Ativos habilitados",
         "note": "Desative para ocultá-los do seu portfólio.",
-        "addCustomToken": "Adicionar Ativo Personalizado",
+        "addCustomToken": "Adicionar ativo personalizado",
         "custom": "Personalizados"
       },
       "rnsCreateName": {
@@ -180,8 +182,8 @@
         "rnsName": "Apelido RNS",
         "anotherAddress": "Outro endereço",
         "nameTooShort": "Apelido contém pelo menos {{count}} caracteres",
-        "nameUnavailable": "Desculpe, o nome digitado não está disponível",
-        "nameAvailable": "O nome digitado está disponível",
+        "nameUnavailable": "Desculpe, o apelido digitado não está disponível",
+        "nameAvailable": "O apelido digitado está disponível",
         "selectAddress": "Selecione um endereço",
         "confirmNotice": {
           "one": "Confirme que você deseja criar apelidos para a carteira abaixo.",
@@ -233,8 +235,9 @@
         "title": "Autenticação de dois fatores",
         "setPasscode": "Configurar PIN",
         "resetPasscode": "Alterar PIN",
-        "useFingerprint": "Usar impressão digital",
-        "useFaceID": "Usar Face ID"
+        "useFingerprint": "Usar biometria",
+        "useFaceID": "Usar Face ID",
+        "useBiometrics": "Usar biometria"
       },
       "resetPasscodeSuccess" :{
         "title": {
@@ -243,7 +246,7 @@
         }
       },
       "keySettings": {
-        "title": "Configurações de carteira",
+        "title": "Configurações da carteira",
         "walletContains": {
           "one": "Esta carteira contém 1 ativo",
           "other": "Esta carteira contém {{count}} ativos"
@@ -258,7 +261,7 @@
       "keyName": {
         "title": "Nome da carteira",
         "question": "Qual nome você deseja para essa carteira?",
-        "notice": "Você pode alterar o nome exibido no dispositivo abaixo.",
+        "notice": "No campo abaixo você pode alterar o nome dessa carteira nesse dispositivo.",
         "name": "Nome",
         "comment": "* O nome da carteira pode conter de 1 a %{maxLength} letras (a-z), números (0-9) e espaço"
       },
@@ -339,10 +342,11 @@
     "Exchange": "Realizar troca",
     "addAsset": "Adicionar ativo",
     "ok": "Ok",
-    "name": "Nome",
+    "nickname": "Apelido",
     "pending": "Pendente",
     "done": "Pronto",
-    "share": "COMPARTILHAR"
+    "share": "COMPARTILHAR",
+    "update": "Atualizar"
   },
   "txState": {
     "Sent": "Enviado",
@@ -419,7 +423,7 @@
     },
     "subdomainCopied": {
       "title": "Copiado",
-      "body": "O subdomínio foi copiado para a área de transferência."
+      "body": "O apelido foi copiado para a área de transferência."
     },
     "txIdCopied": {
       "title": "Copied",
@@ -449,6 +453,12 @@
         "touchToVerify": "Toque para verificar o Face ID",
         "nativeNote": "Por favor, aponte seu rosto para a câmera para que seja feito o reconhecimento facial",
         "notMatch": "Face ID não confere. Por favor, tente novamente."
+      },
+      "biometrics": {
+        "title": "Biometria",
+        "touchToVerify": "Toque para verificar a biometria",
+        "nativeNote": "Verifique sua biometria",
+        "notMatch": "A biometria não confere. Por favor, tente novamente."
       },
       "failedAndTryPasscode": "A autenticação falhou. Por favor, tente o PIN.",
       "failedAndTryAgain": "A autenticação falhou. Por favor, tente novamente."
@@ -482,7 +492,7 @@
     },
     "noWalletAvailable": {
       "title": "Nenhuma carteira disponível",
-      "body": "Ainda não existe carteira disponível para esse Dapp. Por favor, primeiro crie ou importe uma através da Página de Criação de Carteira.\n\n"
+      "body": "Ainda não existe carteira disponível para esse Dapp. Por favor, primeiro crie ou importe uma na página adicionar carteira.\n\n"
     },
     "requestTimeout": {
       "title": "Tempo limite da solicitação",
@@ -490,11 +500,11 @@
     },
     "rnsNameUnavailable": {
       "title": "Apelido do RNS indisponível",
-      "body": "Alguns apelidos não estão disponíveis. Por favor, verifique a lista e tente outro apelido."
+      "body": "Os apelidos inseridos abaixo não estão disponíveis. Por favor, tente novamente com apelidos diferentes."
     },
     "rnsSubdomainNotFound": {
-      "title": "Subdomínio RNS não encontrado",
-      "body": "O subdomínio RNS não foi encontrado no servidor."
+      "title": "Apelido RNS não encontrado",
+      "body": "O apelido RNS não foi encontrado no servidor."
     },
     "rnsNewFeature": {
       "title": "Enviar e receber ficou mais fácil",

@@ -5,7 +5,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 
 import PropTypes from 'prop-types';
-import color from '../../../assets/styles/color.ts';
+import color from '../../../assets/styles/color';
 import Loc from '../misc/loc';
 import references from '../../../assets/references';
 
@@ -102,7 +102,6 @@ class PasscodeModalBase extends PureComponent {
 
   onPressButton(i) {
     const { passcodeOnFill } = this.props;
-    // eslint-disable-next-line react/destructuring-assignment
     this.setState((prevState) => ({ input: prevState.input + i }), () => {
       const { input } = this.state;
       if (input.length >= 4) {

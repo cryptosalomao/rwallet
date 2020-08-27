@@ -17,13 +17,15 @@ import config from '../../../config';
 import coinType from '../../common/wallet/cointype';
 import common from '../../common/common';
 import Item from '../../components/wallet/coin.type.list.item';
+import color from '../../assets/styles/color';
 import definitions from '../../common/definitions';
+import Button from '../../components/common/button/button';
 
 const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#000',
+    color: color.black,
     marginBottom: 10,
     marginLeft: 10,
   },
@@ -43,7 +45,7 @@ class WalletSelectCurrency extends Component {
       const { navigation } = this.props;
       this.state = {
         isLoading: false,
-        isDisabledSwitch: false,
+        canSubmit: true,
       };
       this.phrase = navigation.state.params ? navigation.state.params.phrases : '';
       this.isImportWallet = !!this.phrase;
@@ -133,7 +135,7 @@ class WalletSelectCurrency extends Component {
       const selectedMainnetItems = _.filter(this.mainnet, { selected: true });
       const selectedTestnetItems = _.filter(this.testnet, { selected: true });
       const selectedCount = selectedMainnetItems.length + selectedTestnetItems.length;
-      this.setState({ isDisabledSwitch: selectedCount === 1 });
+      this.setState({ canSubmit: selectedCount !== 0 });
     }
 
     requestCreateWallet(phrase, coins) {
@@ -167,37 +169,38 @@ class WalletSelectCurrency extends Component {
       });
     }
 
-    renderList = (data, isDisabled) => (
+    renderList = (data) => (
       // Restrict the deletion of the last token
       <FlatList
-        extraData={isDisabled}
         data={data}
-        renderItem={({ item }) => <Item data={item} isDisabled={isDisabled && item.selected} onValueChange={this.onSwitchValueChanged} />}
+        renderItem={({ item }) => <Item data={item} onValueChange={this.onSwitchValueChanged} />}
         keyExtractor={(item) => item.title}
       />
     )
 
     render() {
-      const { isLoading, isDisabledSwitch } = this.state;
+      const { isLoading, canSubmit } = this.state;
       const { navigation } = this.props;
       const bottomBtnText = this.isImportWallet ? 'button.IMPORT' : 'button.create';
+
+      const bottomButton = (<Button text={bottomBtnText} onPress={this.onCreateButtonPress} disabled={!canSubmit} />);
+
       return (
         <BasePageGereral
           isSafeView
-          hasBottomBtn
-          bottomBtnText={bottomBtnText}
-          bottomBtnOnPress={this.onCreateButtonPress}
+          hasBottomBtn={false}
           hasLoader
           isLoading={isLoading}
           headerComponent={<Header onBackButtonPress={() => navigation.goBack()} title="page.wallet.selectCurrency.title" />}
+          customBottomButton={bottomButton}
         >
           <View style={[styles.sectionContainer]}>
             <Loc style={[styles.sectionTitle]} text="page.wallet.selectCurrency.mainnet" />
-            { this.renderList(this.mainnet, isDisabledSwitch) }
+            { this.renderList(this.mainnet) }
           </View>
           <View style={[styles.sectionContainer]}>
             <Loc style={[styles.sectionTitle]} text="page.wallet.selectCurrency.testnet" />
-            { this.renderList(this.testnet, isDisabledSwitch) }
+            { this.renderList(this.testnet) }
           </View>
         </BasePageGereral>
       );
